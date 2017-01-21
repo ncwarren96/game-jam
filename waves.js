@@ -6,8 +6,12 @@ function update(){
 	
 }
 function draw(){
-	ctx.rect(0, c.height-h, c.width, h);
+	ctx.fillStyle = "yellow";
+	ctx.rect(0, 0, c.width, c.height);
+	ctx.fill();
 	ctx.fillStyle = "blue";
+	ctx.rect(0, c.height-h, c.width, h);
+	
 	ctx.fill();
 }
 
