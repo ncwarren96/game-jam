@@ -18,6 +18,9 @@ var modY;
 
 var dist = 0;
 var test;
+
+var imgBack;
+
 //mouse event listener and getting mouse Y pos
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -34,6 +37,24 @@ canvas.addEventListener('mousemove', function(evt) {
 
 function init(){
 	GAME_STATE = 0;
+	
+	//initialize background
+	imgBack = new Image();
+	imgBack.x = 0;
+	imgBack.y = 0;
+	imgBack.width = canvas.width;
+	imgBack.height = canvas.height;
+	imgBack.src = "simon/sand.png";
+	
+	//initialize wave
+	imgWave = new Image();
+	imgWave.x = 0;
+	imgWave.y = 0;
+	imgWave.width = canvas.width;
+	imgWave.height = canvas.height;
+	imgWave.src = "simon/wave.png";
+	
+	
 }
 
 function update(){
@@ -99,7 +120,7 @@ function updatePlay(){
 	//console.log(modY);
 	//setting debris pos on whether we have it or not
 	if(haveDebris){
-		debrypos = canvas.height-modY;
+		debrypos = modY;
 	}else{
 		debrypos = 200;
 	}
@@ -112,10 +133,15 @@ function draw(){
 	canvas.width = canvas.width;
 	canvas.height = canvas.height;
 	
+	//background image 
+	ctx.drawImage(imgBack, 0, 0, imgBack.width, imgBack.height);
+	
 	ctx.fillStyle = "blue";
 	//console.log(canvas.height-modY);
-
-	ctx.fillRect(0, canvas.height-modY, canvas.width, modY);
+	
+	//wave image
+	ctx.drawImage(imgWave, 0, modY, imgWave.width, imgWave.height);
+	//ctx.fillRect(0, canvas.height-modY, canvas.width, modY);
 	
 	ctx.fillStyle = "red";
 	ctx.fillRect(300, debrypos, 100, 100);
