@@ -5,8 +5,9 @@ var analyser = null;
 var theBuffer = null;
 var mediaStreamSource = null;
 var detectorElem,
-	pitchElem;
-
+	pitchElem,
+	currentPitch;
+	
 window.onload = function() {
 	toggleLiveInput();
 	audioContext = new AudioContext();
@@ -20,6 +21,10 @@ window.onload = function() {
 	}
 	pitchElem = document.getElementById( "pitch" );
 	detuneAmount = document.getElementById( "detune_amt" );
+}
+
+function getPitch(){
+	return currentPitch;
 }
 
 function error() {
@@ -133,6 +138,7 @@ function updatePitch( time ) {
 	var ac = autoCorrelate( buf, audioContext.sampleRate );
 	
 	pitch = ac;
+	currentPitch = pitch;
 	console.log(pitch);
 
 	if (!window.requestAnimationFrame)
