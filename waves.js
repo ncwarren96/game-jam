@@ -67,12 +67,22 @@ function init(){
 	imgWave.height = canvas.height;
 	imgWave.src = "simon/wave.png";
 	
+	
+	//initialize bottle image 
 	imgBottle = new Image();
 	imgBottle.x = 0;
 	imgBottle.y = 0;
 	imgBottle.width = 25;
 	imgBottle.height = 90;
 	imgBottle.src = "simon/bottle.png";
+	
+	//initialize Title Screen
+	imgTit = new Image();
+	imgTit.x = 0;
+	imgTit.y = 0;
+	imgTit.width = canvas.width;
+	imgTit.height = canvas.height;
+	imgTit.src = "simon/beach.png";
 	
 	bottle = new Items(imgBottle, 100, 200, 25);
 	
@@ -101,8 +111,12 @@ function update(){
 }
 
 function titleScreen(){
+	ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
+	
 	ctx.font = "30px Arial";
-	ctx.fillText("Click to begin",10,50);
+	ctx.fillText("Click to begin",400,550);
+	ctx.textAlign="center";
+	
 	
 	canvas.addEventListener('click', function() {
 		GAME_STATE = 1;
