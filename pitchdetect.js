@@ -21,7 +21,7 @@ window.onload = function() {
 	}
 	pitchElem = document.getElementById( "pitch" );
 	detuneAmount = document.getElementById( "detune_amt" );
-}
+};
 
 function getPitch(){
 	return currentPitch;
@@ -139,7 +139,7 @@ function updatePitch( time ) {
 	
 	pitch = ac;
 	currentPitch = pitch;
-	console.log(pitch);
+	//console.log(pitch);
 
 	if (!window.requestAnimationFrame)
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame;
