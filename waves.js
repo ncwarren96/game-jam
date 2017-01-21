@@ -1,15 +1,19 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-
-var mouseMode = true;
+var mouseMode = false;
 var mouseY = 0;
-var pitch = 0;
+var lastmouse = 0;
+var pitch;
+var wavePitch = 0;
 var lastpitch = 0;
 
 var haveDebris = false;
-var debrypos = 100;
+var doUpdate = false;
+var debrypos = 200;
 var modY;
+
+var dist = 0;
 
 //mouse event listener and getting mouse Y pos
 function getMousePos(canvas, evt) {
@@ -28,13 +32,27 @@ canvas.addEventListener('mousemove', function(evt) {
 
 
 function update(){
-	pitch = getPitch();
-	lastpitch = pitch;
+	dist = Math.abs(lastpitch-pitch);
+	var realDist = lastpitch-pitch;
+	wavePitch = getPitch();
 	
+	if(dist>10){
+		console.log("speed: "+ dist +" too fast!");
+		if(realDist < 0) {realDist = 10}
+		else {realDist = -10}
+		wavePitch = lastpitch + realDist;
+		doUpdate = false;
+	}else{
+		console.log("speed: "+dist);
+		//wavePitch = getPitch();
+		doUpdate = true;
+	}
+	
+	//lastpitch = pitch;
 	
 	//switch for mouse control or pitch control
 	if(!mouseMode){
-		modY = pitch;
+		modY = (wavePitch/2)+50;
 	}else{
 		modY = mouseY;
 	}
@@ -44,13 +62,15 @@ function update(){
 		console.log("HIT");
 		haveDebris = true;
 	}
-	
+	//console.log(modY);
 	//setting debris pos on whether we have it or not
 	if(haveDebris){
 		debrypos = canvas.height-modY;
 	}else{
-		debrypos = 100;
+		debrypos = 200;
 	}
+	
+	lastpitch = wavePitch;
 }
 
 function draw(){
@@ -60,22 +80,16 @@ function draw(){
 	
 	
 	ctx.fillStyle = "blue";
-	console.log(canvas.height-modY);
+	//console.log(canvas.height-modY);
 
 	ctx.fillRect(0, canvas.height-modY, canvas.width, modY);
 	
 	ctx.fillStyle = "red";
 	ctx.fillRect(300, debrypos, 100, 100);
-	
-
-		
-	
-	
-	//ctx.fill();
 }
 
 function game_loop(){
 	update();
 	draw();
 }
-setInterval(game_loop, 60);
+setInterval(game_loop, 30);
