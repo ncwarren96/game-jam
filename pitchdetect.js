@@ -24,7 +24,7 @@ window.onload = function() {
 };
 
 function getPitch(){
-	return (currentPitch/2)+100;
+	return currentPitch;
 }
 
 function error() {
