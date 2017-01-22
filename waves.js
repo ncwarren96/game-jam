@@ -22,7 +22,7 @@ var won = false;
 
 var imgBack, imgWave;
 var items;
-var bottle, coconut, beacBall, shell;
+var bottle, coconut, beacBall, shell, bottleRed, bottleBlue, flopper, baby;
 var currentItem;
 
 var textY = canvas.height;
@@ -140,16 +140,26 @@ function init(){
 	var imgCoconut = imgInit("simon/coconut.png", 0, 0, 50, 50);	
 	var imgBeachBall = imgInit("simon/BeachBall.png", 0, 0, 100, 100);
 	var imgShell = imgInit("simon/shell.png", 0, 0, 50, 35);
+	var imgBottleRed = imgInit("simon/bottleRed.png", 0, 0, 50, 35);
+	var imgBottleBlue = imgInit("simon/bottleBlue.png", 0, 0, 50, 35);
+	var imgFlopper = imgInit("simon/flopper.png", 0, 0, 34, 82);
+	var imgBaby = imgInit("simon/baby.png", 0, 0, 150, 92);
 	
 	//initialize item objects: Image, x-pos, y-pos, resistance
 	bottle = new Items(imgBottle, 100, 200, 20);
 	coconut = new Items(imgCoconut, 100, 200, 20);
 	beachBall = new Items(imgBeachBall, 100, 200, 20);
 	shell = new Items(imgShell, 100, 200, 20);
+	bottleRed = new Items(imgBottleRed, 100, 200, 20);
+	bottleBlue = new Items(imgBottleBlue, 100, 200, 20);
+	flopper = new Items(imgFlopper, 100, 200, 20);
+	baby = new Items(imgBaby, 100, 200, 20);
 	
 	bottle.next = coconut;
 	coconut.next = beachBall;
 	beachBall.next = shell;
+	shell.next = flopper;
+	flopper.next = baby;
 	
 	wavePitch = 0;
 	lastpitch = 0;
