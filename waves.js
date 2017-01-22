@@ -232,10 +232,10 @@ function draw(){
 	else if(GAME_STATE == 2){
 		ctx.font = "30px Arial";
 		ctx.fillText("CREDITS:", 300, textY);
-		ctx.fillText("Simon Benichou", 300, textY+40);
-		ctx.fillText("John Harris", 300, textY+80);	
-		ctx.fillText("Mason Reed", 300, textY+120);	
-		ctx.fillText("Nick Warren", 300, textY+160);
+		ctx.fillText("Simon Benichou -- Art", 300, textY+40);
+		ctx.fillText("John Harris -- ???", 300, textY+80);
+		ctx.fillText("Mason Reed -- Programming", 300, textY+120);
+		ctx.fillText("Nick Warren -- Programing", 300, textY+160);
 		ctx.fillText("STUDIO PETS:", 300, textY+260);
 		ctx.fillText("Blue the Cat", 300, textY+300);
 
