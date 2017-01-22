@@ -4,6 +4,7 @@ var ctx = canvas.getContext("2d");
 var mouseMode = false;
 
 var GAME_STATE = 0;
+var LEVEL = 1;
 
 var mouseY = 0;
 var pitch;
@@ -12,7 +13,8 @@ var lastpitch = 0;
 
 var haveDebris = false;
 var doUpdate = false;
-var debrypos = 200;
+var debrypos;
+var debryposX;
 var modY;
 
 var dist = 0;
@@ -78,9 +80,9 @@ function init(){
 	lastpitch = 0;
 	
 	haveDebris = false;
-	debrypos = 200;
-	
-	
+	won = false;
+	debrypos = canvas.height -((LEVEL+1)*100);
+	debryposX = Math.random() * ((canvas.width -100) - 100) + 100;
 }
 
 function update(){
@@ -112,9 +114,10 @@ function updatePlay(){
 	var realDist = lastpitch-pitch;
 	wavePitch = getPitch();
 	
-	var downSlow = true;
+	//pitch logic
 	if(dist>10){
 		console.log("speed too fast!");
+		
 		if(realDist < 0) {
 			realDist = 10;
 		}else{
@@ -132,13 +135,23 @@ function updatePlay(){
 	}else{
 		modY = mouseY;
 	}
+	var wavepos = (canvas.height-modY);
 	
-	//haveDebris is set true if wave reaches ypos
-	if(canvas.height-modY < debrypos-100 && !haveDebris){
+	//constrain wavepos
+	// if(wavepos<0){
+		// wavepos = 0;
+	// }
+	// else if(wavepos>canvas.height){
+		// wavepos = canvas.height;
+	// }
+	
+	//haveDebris is set true if wave reaches y-pos
+	if(wavepos < debrypos-100 && !haveDebris && !won){
 		console.log("HIT");
 		haveDebris = true;
 	}
-	//console.log(modY);
+
+
 	//setting debris pos on whether we have it or not
 	if(haveDebris){
 		debrypos = (canvas.height-modY)+100;
@@ -146,12 +159,21 @@ function updatePlay(){
 		debrypos = debrypos;
 	}
 	
-	if(debrypos > 400){
+	//WIN STATE
+	if(debrypos > 450){
 		won = true;
 		console.log("YOU WIN!!!!!!!!!!!");
-		debrypos+=5;
+		haveDebris=false;
+		debrypos+=3;
 		//init();
 		//GAME_STATE=1;
+	}
+	if(debrypos > canvas.height){
+		console.log("ALL THE WAY");
+		init();
+		GAME_STATE = 1;
+		LEVEL++;
+		bottle.image.src = "simon/coconut.png";
 	}
 	
 	lastpitch = wavePitch;
@@ -169,11 +191,11 @@ function draw(){
 	ctx.drawImage(imgWave, 0, canvas.height-modY, imgWave.width, imgWave.height);
 	
 	//item image
-	bottle.draw(100, debrypos);
+	bottle.draw(debryposX, debrypos);
 	
 	if(won){
 		ctx.font = "72px Arial";
-		ctx.fillText("SUCCESS!",10,50);
+		ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
 	}
 }
 
