@@ -136,7 +136,6 @@ function update(){
 	}
 	else if(GAME_STATE == 1){
 		updatePlay();
-		draw();
 		//run game
 	}
 	else if(GAME_STATE == 2){
@@ -210,8 +209,6 @@ function updatePlay(){
 		console.log("YOU WIN!!!!!!!!!!!");
 		haveDebris=false;
 		debrypos+=3;
-		//init();
-		//GAME_STATE=1;
 	}
 	if(debrypos > canvas.height){
 		console.log("ALL THE WAY");
@@ -221,8 +218,6 @@ function updatePlay(){
 		if(currentItem.next != null){
 			currentItem = currentItem.next;			
 		}
-		//currentItem = currentItem.next;
-		//bottle.image.src = "simon/coconut.png";
 	}
 	
 	lastpitch = wavePitch;
@@ -233,19 +228,27 @@ function draw(){
 	canvas.width = canvas.width;
 	canvas.height = canvas.height;
 	
-	//background image 
-	ctx.drawImage(imgBack, 0, 0, imgBack.width, imgBack.height);
-		
-	//wave image
-	ctx.drawImage(imgWave, 0, canvas.height-modY, imgWave.width, imgWave.height);
-	
-	//item image
-	currentItem.draw(debryposX, debrypos);
-	
-	if(won){
-		ctx.font = "72px Arial";
-		ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
+	if(GAME_STATE ==0){
+		ctx.font = "30px Arial";
+		ctx.fillText("Click to begin",10,50);
 	}
+	else if(GAME_STATE == 1){
+		//background image 
+		ctx.drawImage(imgBack, 0, 0, imgBack.width, imgBack.height);
+			
+		//wave image
+		ctx.drawImage(imgWave, 0, canvas.height-modY, imgWave.width, imgWave.height);
+		
+		//item image
+		currentItem.draw(debryposX, debrypos);
+		
+		if(won){
+			ctx.font = "72px Arial";
+			ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
+		}
+	}
+	
+	
 }
 
 function newItem(){
@@ -256,6 +259,7 @@ function newItem(){
 
 function game_loop(){
 	update();
+	draw();
 }
 init();
 setInterval(game_loop, 30);
