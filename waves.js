@@ -91,6 +91,7 @@ canvas.addEventListener('mousedown', function(evt){
 		GAME_STATE = 3;
 	}
 	else if(GAME_STATE == 3){
+		song.pause();
 		GAME_STATE = 0;
 	}
 });
@@ -363,8 +364,7 @@ function draw(){
 	
 	else if(GAME_STATE == 3){
 		ctx.font = "30px Arial";
-		ctx.fillText("Your Score: ", 100, 30);
-		ctx.fillText(level, 300, 30);
+		ctx.fillText("Your Score: "+LEVEL, 100, 30);
 		for(var i = 1; i <= highScores.length; i++){
 			ctx.fillText(i+": "+highScores[i-1].score, 100, 30+(40*i));
 		}
