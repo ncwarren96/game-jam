@@ -229,7 +229,10 @@ function draw(){
 		ctx.fillText("Simon Benichou", 300, textY+40);
 		ctx.fillText("John Harris", 300, textY+80);	
 		ctx.fillText("Mason Reed", 300, textY+120);	
-		ctx.fillText("Nick Warren", 300, textY+160);	
+		ctx.fillText("Nick Warren", 300, textY+160);
+		ctx.fillText("STUDIO PETS:", 300, textY+260);
+		ctx.fillText("Blue the Cat", 300, textY+300);
+
 	}
 }
 
