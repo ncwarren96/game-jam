@@ -345,13 +345,19 @@ function draw(){
 	//CREDITS
 	else if(GAME_STATE == 2){
 		ctx.font = "30px Arial";
-		ctx.fillText("CREDITS:", 300, textY);
-		ctx.fillText("Simon Benichou -- Art", 300, textY+40);
-		ctx.fillText("John Harris -- ???", 300, textY+80);
-		ctx.fillText("Mason Reed -- Programming", 300, textY+120);
-		ctx.fillText("Nick Warren -- Programing", 300, textY+160);
+		ctx.fillText("Rockhard Software Presents:", 300, textY-40);
+		ctx.fillText("Screaming Wave Rampage in Sea Minor", 300, textY);
+		ctx.fillText("Simon Benichou -- Art, Programming, Crying", 300, textY+40);
+		ctx.fillText("John Harris -- food runs, moral support, idea guy, slave", 300, textY+80);
+		ctx.fillText("Mason Reed -- Programming, gifted vocal chords", 300, textY+120);
+		ctx.fillText("Nick Warren -- Programing, high quality mic man, ooooooooOOOOOOOOO", 300, textY+160);
 		ctx.fillText("STUDIO PETS:", 300, textY+260);
 		ctx.fillText("Blue the Cat", 300, textY+300);
+		ctx.fillText("Special Thanks", 300, textY+400);
+		ctx.fillText("Katy Martinez", 300, textY+440);
+		ctx.fillText("Sara Dibble", 300, textY+480);
+		ctx.fillText("oooooooooOOOOOOOOH", 300, textY+520);
+		
 
 	}
 	
