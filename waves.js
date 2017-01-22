@@ -28,6 +28,9 @@ var currentItem;
 var textY = canvas.height;
 var song; // Sound Efx
 var songLoad = "simon/Waves.mp3";
+var oceanSound;
+var oceanSoundLoad = "simon/OceanSounds.mp3";
+
 
 var count = 0;
 var timer = 6;
@@ -170,6 +173,7 @@ function init(){
 	debryposX = Math.random() * ((canvas.width -100) - 100) + 100;
 	
 	song = document.getElementById("song");
+	oceanSound = document.getElementById("oceanSound");
 	
 }
 
@@ -193,6 +197,7 @@ function update(){
 }
 
 function titleScreen(){
+	oceanSound.play();
 	currentItem = bottle;
 	timer = 60;
 	textY = canvas.height;
@@ -253,6 +258,10 @@ function updatePlay(){
 		debrypos = (canvas.height-modY)+100;
 	}else{
 		debrypos = debrypos;
+	}
+	
+	if (GAME_STATE = 1){
+		oceanSound.pause();
 	}
 	
 	//WIN STATE
