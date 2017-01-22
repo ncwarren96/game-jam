@@ -74,7 +74,7 @@ function init(){
 	
 	imgTit = imgInit("simon/beach.png", 0, 0, canvas.width, canvas.height);
 	imgBack = imgInit("simon/sand.png", 0, 0, canvas.width, canvas.height);
-	imgWave = imgInit("simon/wave.png", 0, 0, canvas.width, canvas.height);
+	imgWave = imgInit("simon/wave.png", 0, 0, canvas.width, 1000);
 	var imgBottle = imgInit("simon/bottle.png", 0, 0, 25, 90);
 	var imgCoconut = imgInit("simon/coconut.png", 0, 0, 50, 50);	
 	var imgBeachBall = imgInit("simon/BeachBall.png", 0, 0, 100, 100);
