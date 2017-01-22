@@ -86,8 +86,8 @@ canvas.addEventListener('mousedown', function(evt){
 		GAME_STATE = 1;
 	}
 	else if(GAME_STATE == 2){
-		console.log(highScores+", "+level);
-		updateScores(highScores, level);
+		console.log(highScores+", "+LEVEL);
+		updateScores(highScores, LEVEL);
 		GAME_STATE = 3;
 	}
 	else if(GAME_STATE == 3){
@@ -132,8 +132,8 @@ function init(){
 	else{
 		highScores = JSON.parse(localStorage.getItem("WaveHighScores"));
 	}
-	console.log(localStorage.getItem("WaveHighScores"));
-	console.log(highScores);
+	//console.log(localStorage.getItem("WaveHighScores"));
+	//console.log(highScores);
 	
 	
 	imgTit = imgInit("simon/beach.png", 0, 0, canvas.width, canvas.height);
@@ -149,20 +149,21 @@ function init(){
 	var imgBaby = imgInit("simon/baby.png", 0, 0, 150, 92);
 	
 	//initialize item objects: Image, x-pos, y-pos, resistance
-	bottle = new Items(imgBottle, 100, 200, 20);
-	coconut = new Items(imgCoconut, 100, 200, 5);
-	beachBall = new Items(imgBeachBall, 100, 200, 20);
-	shell = new Items(imgShell, 100, 200, 20);
-	bottleRed = new Items(imgBottleRed, 100, 200, 20);
-	bottleBlue = new Items(imgBottleBlue, 100, 200, 20);
+	bottle = new Items(imgBottle, 100, 200, 40);
+	coconut = new Items(imgCoconut, 100, 200, 35);
+	beachBall = new Items(imgBeachBall, 100, 200, 30);
+	shell = new Items(imgShell, 100, 200, 25);
+	bottleRed = new Items(imgBottleRed, 100, 200, 10);
+	bottleBlue = new Items(imgBottleBlue, 100, 200, 5);
 	flopper = new Items(imgFlopper, 100, 200, 20);
-	baby = new Items(imgBaby, 100, 200, 20);
+	baby = new Items(imgBaby, 100, 200, 15);
 	
 	bottle.next = coconut;
 	coconut.next = beachBall;
 	beachBall.next = shell;
 	shell.next = flopper;
 	flopper.next = baby;
+	baby.next = bottleRed;
 	
 	wavePitch = 0;
 	lastpitch = 0;
@@ -211,8 +212,8 @@ function creditScreen(){
 	textY--;
 	song.play();
 	if(textY+300 < 0){
-		console.log(highScores+", "+level);
-		updateScores(highScores, level);
+		console.log(highScores+", "+LEVEL);
+		updateScores(highScores, LEVEL);
 		GAME_STATE = 3;
 	}
 }
@@ -250,6 +251,10 @@ function updatePlay(){
 	if(wavepos < debrypos-100 && !haveDebris && !won){
 		console.log("HIT");
 		haveDebris = true;
+	}
+	
+	if(debrypos<50){
+		debrypos = 50;
 	}
 
 
