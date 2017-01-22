@@ -184,6 +184,7 @@ function updatePlay(){
 		console.log("ALL THE WAY");
 		init();
 		LEVEL++;
+		//sets end level
 		if(LEVEL > 2){
 			GAME_STATE = 2; //credits
 		}else{
@@ -201,6 +202,7 @@ function draw(){
 	canvas.width = canvas.width;
 	canvas.height = canvas.height;
 	
+	//TITLE SCREEN
 	if(GAME_STATE ==0){
 		ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
 		
@@ -208,6 +210,8 @@ function draw(){
 		ctx.fillText("Click to begin",300, 550);
 		ctx.textAlign="center";
 	}
+	
+	//GAME PLAY
 	else if(GAME_STATE == 1){
 		//background image 
 		ctx.drawImage(imgBack, 0, 0, imgBack.width, imgBack.height);
@@ -223,6 +227,8 @@ function draw(){
 			ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
 		}
 	}
+	
+	//CREDITS
 	else if(GAME_STATE == 2){
 		ctx.font = "30px Arial";
 		ctx.fillText("CREDITS:", 300, textY);
