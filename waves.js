@@ -149,14 +149,14 @@ function init(){
 	var imgBaby = imgInit("simon/baby.png", 0, 0, 150, 92);
 	
 	//initialize item objects: Image, x-pos, y-pos, resistance
-	bottle = new Items(imgBottle, 100, 200, 40);
-	coconut = new Items(imgCoconut, 100, 200, 35);
-	beachBall = new Items(imgBeachBall, 100, 200, 30);
+	bottle = new Items(imgBottle, 100, 200, 35);
+	coconut = new Items(imgCoconut, 100, 200, 30);
+	beachBall = new Items(imgBeachBall, 100, 200, 25);
 	shell = new Items(imgShell, 100, 200, 25);
 	bottleRed = new Items(imgBottleRed, 100, 200, 10);
 	bottleBlue = new Items(imgBottleBlue, 100, 200, 5);
 	flopper = new Items(imgFlopper, 100, 200, 20);
-	baby = new Items(imgBaby, 100, 200, 15);
+	baby = new Items(imgBaby, 100, 200, 10);
 	
 	bottle.next = coconut;
 	coconut.next = beachBall;
