@@ -29,9 +29,29 @@ var textY = canvas.height;
 var song; // Sound Efx
 var songLoad = "simon/Waves.mp3";
 
+var count = 0;
+var timer = 60;
 
+function JSONScore(score){
+	var JSONobj = {"score": score};
+	console.log(JSONobj);
+	return JSONobj;
+}
 
+function checkScores(user_score, score_array){
+	for(var i = 0; i < score_array.length; i++){
+		var currentScore = score_array[i];
+		if(user_score >= currentScore.score){
+			return i;
+		}
+	}
+	return -1;
+}
 
+function updateScores(array, name, score){
+	var index = checkScores(score, array);
+	
+}
 
 //mouse event listener and getting mouse Y pos
 function getMousePos(canvas, evt) {
@@ -46,6 +66,11 @@ canvas.addEventListener('mousemove', function(evt) {
 	mouseY = mousePos.y;
     //console.log('Mouse position: ' + mousePos.x + ',' + mousePos.y);
 }, false);
+
+document.onkeydown = function(evt){
+	var key = evt.which;
+	
+}
 
 function Items(img, x, y, resistance){
 	this.image = img;
@@ -70,7 +95,23 @@ function imgInit(url, x, y, width, height){
 }
 
 function init(){
+	//localStorage.setItem("WaveHighScores", "null");
 	GAME_STATE = 0;
+	if(localStorage.getItem("WaveHighScores") === null){
+		var highScores = new Array();
+		for(var i = 0; i < 5; i++){
+			var newScore = JSONScore(5-i);
+			highScores.push(newScore);
+		}
+		localStorage.setItem("WaveHighScores", JSON.stringify(highScores));
+		console.log(highScores);
+	}
+	else{
+		var highScores = JSON.parse(localStorage.getItem("WaveHighScores"));
+	}
+	console.log(localStorage.getItem("WaveHighScores"));
+	console.log(highScores);
+	
 	
 	imgTit = imgInit("simon/beach.png", 0, 0, canvas.width, canvas.height);
 	imgBack = imgInit("simon/sand.png", 0, 0, canvas.width, canvas.height);
@@ -115,6 +156,9 @@ function update(){
 		creditScreen()
 		//pause game
 	}
+	else if(GAME_STATE == 3){
+		highScores();
+	}
 }
 
 function titleScreen(){
@@ -128,6 +172,13 @@ function titleScreen(){
 function creditScreen(){
 	textY--;
 	song.play();
+	if(textY+300 < 0){
+		GAME_STATE = 3;
+	}
+}
+
+function highScores(){
+	
 }
 
 function updatePlay(){
@@ -147,7 +198,7 @@ function updatePlay(){
 		}
 		wavePitch = lastpitch + realDist;
 	}else{
-		console.log("speed ok");
+		//console.log("speed ok");
 	}
 	
 	//switch for mouse control or pitch control
@@ -185,16 +236,21 @@ function updatePlay(){
 		init();
 		LEVEL++;
 		//sets end level
-		if(LEVEL > 2){
-			GAME_STATE = 2; //credits
-		}else{
-			GAME_STATE = 1;	//next level
-		}
+		
+		GAME_STATE = 1;	//next level
+		
 		if(currentItem.next != null){
 			currentItem = currentItem.next;			
 		}
 	}
 	lastpitch = wavePitch;
+	count += 1;
+	if(count%30 == 0){
+		timer -= 1;
+	}
+	if(timer == 0){
+		GAME_STATE = 2;
+	}
 }
 
 function draw(){
@@ -226,6 +282,8 @@ function draw(){
 			ctx.font = "72px Arial";
 			ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
 		}
+		ctx.font = "20px Arial";
+		ctx.fillText("Time: "+timer, 30, 80);
 	}
 	
 	//CREDITS
@@ -239,6 +297,10 @@ function draw(){
 		ctx.fillText("STUDIO PETS:", 300, textY+260);
 		ctx.fillText("Blue the Cat", 300, textY+300);
 
+	}
+	
+	else if(GAME_STATE == 3){
+		
 	}
 }
 
