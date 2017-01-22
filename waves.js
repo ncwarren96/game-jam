@@ -42,17 +42,24 @@ function JSONScore(score){
 
 function checkScores(user_score, score_array){
 	for(var i = 0; i < score_array.length; i++){
-		var currentScore = score_array[i];
-		if(user_score >= currentScore.score){
+		var currentScore = score_array[i];{
+		console.log(currentScore.score+", "+user_score);
+		if(user_score >= currentScore.score)
 			return i;
 		}
 	}
 	return -1;
 }
 
-function updateScores(array, name, score){
+function updateScores(array, score){
 	var index = checkScores(score, array);
-	
+	console.log(index);
+	if(index > -1){
+		var newScore = JSONScore(score);
+		array.splice(index, 0, newScore);
+		array.pop();
+		localStorage.setItem("WaveHighScores", JSON.stringify(highScores));
+	}
 }
 
 //mouse event listener and getting mouse Y pos
@@ -76,7 +83,9 @@ canvas.addEventListener('mousedown', function(evt){
 		GAME_STATE = 1;
 	}
 	else if(GAME_STATE == 2){
-		GAME_STATE == 3;
+		console.log(highScores+", "+level);
+		updateScores(highScores, level);
+		GAME_STATE = 3;
 	}
 	else if(GAME_STATE == 3){
 		GAME_STATE = 0;
@@ -187,6 +196,8 @@ function creditScreen(){
 	textY--;
 	song.play();
 	if(textY+300 < 0){
+		console.log(highScores+", "+level);
+		updateScores(highScores, level);
 		GAME_STATE = 3;
 	}
 }
@@ -324,7 +335,6 @@ function draw(){
 		ctx.font = "30px Arial";
 		ctx.fillText("Your Score: ", 100, 30);
 		ctx.fillText(level, 300, 30);
-		console.log(highScores);
 		for(var i = 1; i <= highScores.length; i++){
 			ctx.fillText(i+": "+highScores[i-1].score, 100, 30+(40*i));
 		}
