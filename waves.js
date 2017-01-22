@@ -23,8 +23,15 @@ var won = false;
 var imgBack, imgWave;
 var items;
 var bottle, coconut, beacBall, shell;
-
 var currentItem;
+
+var textY = canvas.height;
+var song; // Sound Efx
+var songLoad = "simon/Waves.mp3";
+
+
+
+
 
 //mouse event listener and getting mouse Y pos
 function getMousePos(canvas, evt) {
@@ -65,42 +72,7 @@ function imgInit(url, x, y, width, height){
 function init(){
 	GAME_STATE = 0;
 	
-<<<<<<< HEAD
-	//initialize background
-	imgBack = new Image();
-	imgBack.x = 0;
-	imgBack.y = 0;
-	imgBack.width = canvas.width;
-	imgBack.height = canvas.height;
-	imgBack.src = "simon/sand.png";
-	
-	//initialize wave
-	imgWave = new Image();
-	imgWave.x = 0;
-	imgWave.y = 0;
-	imgWave.width = canvas.width;
-	imgWave.height = canvas.height;
-	imgWave.src = "simon/wave.png";
-	
-	
-	//initialize bottle image 
-	imgBottle = new Image();
-	imgBottle.x = 0;
-	imgBottle.y = 0;
-	imgBottle.width = 25;
-	imgBottle.height = 90;
-	imgBottle.src = "simon/bottle.png";
-	
-	//initialize Title Screen
-	imgTit = new Image();
-	imgTit.x = 0;
-	imgTit.y = 0;
-	imgTit.width = canvas.width;
-	imgTit.height = canvas.height;
-	imgTit.src = "simon/beach.png";
-	
-	bottle = new Items(imgBottle, 100, 200, 25);
-=======
+	imgTit = imgInit("simon/beach.png", 0, 0, canvas.width, canvas.height);
 	imgBack = imgInit("simon/sand.png", 0, 0, canvas.width, canvas.height);
 	imgWave = imgInit("simon/wave.png", 0, 0, canvas.width, canvas.height);
 	var imgBottle = imgInit("simon/bottle.png", 0, 0, 25, 90);
@@ -117,7 +89,6 @@ function init(){
 	bottle.next = coconut;
 	coconut.next = beachBall;
 	beachBall.next = shell;
->>>>>>> origin/master
 	
 	wavePitch = 0;
 	lastpitch = 0;
@@ -126,6 +97,8 @@ function init(){
 	won = false;
 	debrypos = canvas.height -((LEVEL+1)*100);
 	debryposX = Math.random() * ((canvas.width -100) - 100) + 100;
+	
+	song = document.getElementById("song");
 	
 }
 
@@ -139,25 +112,22 @@ function update(){
 		//run game
 	}
 	else if(GAME_STATE == 2){
+		creditScreen()
 		//pause game
 	}
 }
 
 function titleScreen(){
-<<<<<<< HEAD
-	ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
-	
-	ctx.font = "30px Arial";
-	ctx.fillText("Click to begin",400,550);
-	ctx.textAlign="center";
-	
-=======
 	currentItem = bottle;
->>>>>>> origin/master
-	
+
 	canvas.addEventListener('click', function() {
 		GAME_STATE = 1;
 	}, false);	
+}
+
+function creditScreen(){
+	textY--;
+	song.play();
 }
 
 function updatePlay(){
@@ -170,9 +140,9 @@ function updatePlay(){
 		console.log("speed too fast!");
 
 		if(realDist < 0) {
-			realDist = 10;
+			realDist = 15;
 		}else{
-			realDist = -50;
+			realDist = -30;
 			haveDebris = false;
 		}
 		wavePitch = lastpitch + realDist;
@@ -213,13 +183,16 @@ function updatePlay(){
 	if(debrypos > canvas.height){
 		console.log("ALL THE WAY");
 		init();
-		GAME_STATE = 1;
 		LEVEL++;
+		if(LEVEL > 2){
+			GAME_STATE = 2; //credits
+		}else{
+			GAME_STATE = 1;	//next level
+		}
 		if(currentItem.next != null){
 			currentItem = currentItem.next;			
 		}
 	}
-	
 	lastpitch = wavePitch;
 }
 
@@ -229,8 +202,11 @@ function draw(){
 	canvas.height = canvas.height;
 	
 	if(GAME_STATE ==0){
+		ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
+		
 		ctx.font = "30px Arial";
-		ctx.fillText("Click to begin",10,50);
+		ctx.fillText("Click to begin",300, 550);
+		ctx.textAlign="center";
 	}
 	else if(GAME_STATE == 1){
 		//background image 
@@ -247,8 +223,14 @@ function draw(){
 			ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
 		}
 	}
-	
-	
+	else if(GAME_STATE == 2){
+		ctx.font = "30px Arial";
+		ctx.fillText("CREDITS:", 300, textY);
+		ctx.fillText("Simon Benichou", 300, textY+40);
+		ctx.fillText("John Harris", 300, textY+80);	
+		ctx.fillText("Mason Reed", 300, textY+120);	
+		ctx.fillText("Nick Warren", 300, textY+160);	
+	}
 }
 
 function newItem(){
