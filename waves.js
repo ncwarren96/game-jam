@@ -142,12 +142,12 @@ function init(){
 	var imgShell = imgInit("simon/shell.png", 0, 0, 50, 35);
 	var imgBottleRed = imgInit("simon/bottleRed.png", 0, 0, 50, 35);
 	var imgBottleBlue = imgInit("simon/bottleBlue.png", 0, 0, 50, 35);
-	var imgFlopper = imgInit("simon/flopper.png", 0, 0, 34, 82);
+	var imgFlopper = imgInit("simon/floppers.png", 0, 0, 34, 82);
 	var imgBaby = imgInit("simon/baby.png", 0, 0, 150, 92);
 	
 	//initialize item objects: Image, x-pos, y-pos, resistance
 	bottle = new Items(imgBottle, 100, 200, 20);
-	coconut = new Items(imgCoconut, 100, 200, 20);
+	coconut = new Items(imgCoconut, 100, 200, 5);
 	beachBall = new Items(imgBeachBall, 100, 200, 20);
 	shell = new Items(imgShell, 100, 200, 20);
 	bottleRed = new Items(imgBottleRed, 100, 200, 20);
@@ -194,7 +194,7 @@ function update(){
 
 function titleScreen(){
 	currentItem = bottle;
-	timer = 6;
+	timer = 60;
 	textY = canvas.height;
 	level = 0;
 	/*canvas.addEventListener('click', function() {
