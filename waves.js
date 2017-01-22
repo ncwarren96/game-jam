@@ -79,7 +79,7 @@ canvas.addEventListener('mousedown', function(evt){
 		GAME_STATE == 3;
 	}
 	else if(GAME_STATE == 3){
-		GAME_STATE = 0
+		GAME_STATE = 0;
 	}
 });
 
@@ -165,7 +165,7 @@ function update(){
 		//run game
 	}
 	else if(GAME_STATE == 2){
-		creditScreen()
+		creditScreen();
 		//pause game
 	}
 	else if(GAME_STATE == 3){
@@ -272,8 +272,9 @@ function draw(){
 	if(GAME_STATE ==0){
 		ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
 		
+		ctx.fillStyle = "white";
 		ctx.font = "30px Arial";
-		ctx.fillText("[CLICK TO BEGIN]",300, 550);
+		ctx.fillText("[CLICK TO BEGIN]",280, 550);
 		ctx.textAlign="center";
 	}
 	
@@ -289,11 +290,21 @@ function draw(){
 		currentItem.draw(debryposX, debrypos);
 		
 		if(won){
+			ctx.fillStyle = "white";
 			ctx.font = "72px Arial";
-			ctx.fillText("LEVEL "+LEVEL+" SUCCESS!",30,50);
+			ctx.fillText("SUCCESS!",200,100);
 		}
-		ctx.font = "20px Arial";
-		ctx.fillText("Time: "+timer, 30, 80);
+		ctx.fillStyle = "white";
+		//display timer
+		ctx.font = "30px Arial";
+		ctx.fillText("Time:", 10, 40);
+		ctx.font = "40px Arial";
+		ctx.fillText(timer, 90, 40);
+		
+		//display score
+		ctx.font = "30px Arial";
+		ctx.fillText(LEVEL + " items collected!", canvas.width-270, canvas.height-30);
+		
 	}
 	
 	//CREDITS
