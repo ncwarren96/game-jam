@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 var mouseMode = false;
 
 var GAME_STATE = 0;
-var LEVEL = 1;
+var LEVEL = 0;
 
 var mouseY;
 var pitch;
@@ -30,7 +30,9 @@ var song; // Sound Efx
 var songLoad = "simon/Waves.mp3";
 
 var count = 0;
-var timer = 60;
+var timer = 6;
+
+var highScores;
 
 function JSONScore(score){
 	var JSONobj = {"score": score};
@@ -61,16 +63,25 @@ function getMousePos(canvas, evt) {
       y: evt.clientY - rect.top
     };
   }
+  
 canvas.addEventListener('mousemove', function(evt) {
     var mousePos = getMousePos(canvas, evt);
 	mouseY = mousePos.y;
     //console.log('Mouse position: ' + mousePos.x + ',' + mousePos.y);
 }, false);
 
-document.onkeydown = function(evt){
-	var key = evt.which;
-	
-}
+canvas.addEventListener('mousedown', function(evt){
+	console.log(GAME_STATE);
+	if(GAME_STATE == 0){
+		GAME_STATE = 1;
+	}
+	else if(GAME_STATE == 2){
+		GAME_STATE == 3;
+	}
+	else if(GAME_STATE == 3){
+		GAME_STATE = 0
+	}
+});
 
 function Items(img, x, y, resistance){
 	this.image = img;
@@ -98,7 +109,7 @@ function init(){
 	//localStorage.setItem("WaveHighScores", "null");
 	GAME_STATE = 0;
 	if(localStorage.getItem("WaveHighScores") === null){
-		var highScores = new Array();
+		highScores = new Array();
 		for(var i = 0; i < 5; i++){
 			var newScore = JSONScore(5-i);
 			highScores.push(newScore);
@@ -107,7 +118,7 @@ function init(){
 		console.log(highScores);
 	}
 	else{
-		var highScores = JSON.parse(localStorage.getItem("WaveHighScores"));
+		highScores = JSON.parse(localStorage.getItem("WaveHighScores"));
 	}
 	console.log(localStorage.getItem("WaveHighScores"));
 	console.log(highScores);
@@ -136,7 +147,7 @@ function init(){
 	
 	haveDebris = false;
 	won = false;
-	debrypos = canvas.height -((LEVEL+1)*100);
+	debrypos = canvas.height -((LEVEL+2)*100);
 	debryposX = Math.random() * ((canvas.width -100) - 100) + 100;
 	
 	song = document.getElementById("song");
@@ -144,6 +155,7 @@ function init(){
 }
 
 function update(){
+	//console.log(GAME_STATE);
 	if(GAME_STATE == 0){
 		titleScreen();
 		//run title scren
@@ -157,16 +169,18 @@ function update(){
 		//pause game
 	}
 	else if(GAME_STATE == 3){
-		highScores();
+		//highScores();
 	}
 }
 
 function titleScreen(){
 	currentItem = bottle;
-
-	canvas.addEventListener('click', function() {
+	timer = 6;
+	textY = canvas.height;
+	level = 0;
+	/*canvas.addEventListener('click', function() {
 		GAME_STATE = 1;
-	}, false);	
+	}, false);	*/
 }
 
 function creditScreen(){
@@ -175,10 +189,6 @@ function creditScreen(){
 	if(textY+300 < 0){
 		GAME_STATE = 3;
 	}
-}
-
-function highScores(){
-	
 }
 
 function updatePlay(){
@@ -263,7 +273,7 @@ function draw(){
 		ctx.drawImage(imgTit, 0, 0, imgTit.width, imgTit.height);
 		
 		ctx.font = "30px Arial";
-		ctx.fillText("Click to begin",300, 550);
+		ctx.fillText("[CLICK TO BEGIN]",300, 550);
 		ctx.textAlign="center";
 	}
 	
@@ -300,7 +310,13 @@ function draw(){
 	}
 	
 	else if(GAME_STATE == 3){
-		
+		ctx.font = "30px Arial";
+		ctx.fillText("Your Score: ", 100, 30);
+		ctx.fillText(level, 300, 30);
+		console.log(highScores);
+		for(var i = 1; i <= highScores.length; i++){
+			ctx.fillText(i+": "+highScores[i-1].score, 100, 30+(40*i));
+		}
 	}
 }
 
